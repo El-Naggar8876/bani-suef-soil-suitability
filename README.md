@@ -6,7 +6,7 @@
 
 Reproducible analysis pipeline accompanying the manuscript:
 
-> **ElNaggar, A. *et al.* (2026)** — *Drainage, not salinity, is the binding irrigation-suitability constraint in a Middle-Egypt Nile floodplain: a probabilistic, counterfactual assessment.* Submitted to *Geoderma Regional*.
+> **El-Naggar, A. *et al.* (2026)** — *Drainage, not salinity, is the binding irrigation-suitability constraint in a Middle-Egypt Nile floodplain: a probabilistic, counterfactual assessment.* Submitted to *Geoderma Regional*.
 
 The repository combines (i) **digital soil mapping** with quantile random forest (QRF) and rigorous spatial cross-validation, (ii) **probabilistic land evaluation** via Monte Carlo propagation through the Sys–Verheye ALES-Arid rating equations, (iii) **counterfactual gap decomposition** that isolates the binding limitation pixel-by-pixel, and (iv) **independent ground-truth validation** against a 993-point Sentinel-2 cropland survey (March 2025) over the 641.98 km² Beni Suef floodplain, Middle Egypt.
 
@@ -153,7 +153,7 @@ If you use this code, please cite **both** the software and the article:
 }
 
 @article{elnaggar_2026_banisuef_article,
-  author  = {ElNaggar, Ahmed and co-authors},
+  author  = {El-Naggar, Ahmed;  Abou Alfotoh, M.S.M; Abdel Ghaffar, M. K; El-GamalB. A; Abdellatif D. Abdellatif},
   title   = {Drainage, not salinity, is the binding irrigation-suitability constraint in a Middle-Egypt Nile floodplain: a probabilistic, counterfactual assessment},
   journal = {Geoderma Regional},
   year    = 2026,
@@ -180,6 +180,6 @@ This work was supported by IHE Delft, the Soil, Water and Environment Research I
 
 ## Contact
 
-Corresponding author: **Dr Ahmed ElNaggar** — `a.elnaggar@un-ihe.org`
+Corresponding author: **Dr Ahmed El-Naggar** — `a.elnaggar@un-ihe.org`
 
 Issue tracker: please open a GitHub issue for bug reports or reproducibility questions.
