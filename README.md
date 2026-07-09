@@ -143,7 +143,7 @@ If you use this code, please cite **both** the software and the article:
 
 ```bibtex
 @software{elnaggar_2026_banisuef_code,
-  author       = {ElNaggar, Ahmed and co-authors},
+  author       = {El-Naggar, Ahmed;  Abou Alfotoh, M.S.M; Abdel Ghaffar, M. K; El-GamalB. A; Abdellatif D. Abdellatif},
   title        = {Bani Suef irrigation-suitability digital-soil-mapping repository},
   year         = 2026,
   publisher    = {Zenodo},
