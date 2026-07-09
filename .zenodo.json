@@ -1,0 +1,37 @@
+{
+  "title": "Bani Suef irrigation-suitability digital-soil-mapping repository",
+  "description": "<p>Reproducible analysis pipeline coupling quantile-random-forest digital soil mapping, Monte Carlo Sys\u2013Verheye ALES-Arid land evaluation, and counterfactual gap decomposition over the Beni Suef alluvial floodplain (Middle Egypt). Independent ground-truth validation against a 993-point Sentinel-2 cropland survey (March 2025) is included. Companion code to ElNaggar et al. (2026), <em>Geoderma Regional</em> (submitted).</p>",
+  "upload_type": "software",
+  "license": "MIT",
+  "access_right": "open",
+  "language": "eng",
+  "version": "1.0.0",
+  "keywords": [
+    "digital soil mapping",
+    "uncertainty quantification",
+    "quantile random forest",
+    "ALES-Arid",
+    "Sys-Verheye",
+    "counterfactual analysis",
+    "irrigation suitability",
+    "land evaluation",
+    "Nile floodplain",
+    "Egypt"
+  ],
+  "creators": [
+    {
+      "name": "ElNaggar, Ahmed",
+      "affiliation": "IHE Delft Institute for Water Education, Delft, The Netherlands"
+    }
+  ],
+  "related_identifiers": [
+    {
+      "relation": "isSupplementTo",
+      "identifier": "10.0000/GEODREG.PLACEHOLDER",
+      "resource_type": "publication-article",
+      "scheme": "doi"
+    }
+  ],
+  "communities": [],
+  "notes": "Replace placeholder DOI with the journal-issued DOI at acceptance. Add co-authors and ORCIDs before pushing the GitHub release that triggers Zenodo archiving."
+}

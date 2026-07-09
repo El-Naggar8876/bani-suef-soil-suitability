@@ -1,0 +1,51 @@
+# See https://citation-file-format.github.io/ for full schema documentation.
+cff-version: 1.2.0
+message: "If you use this software, please cite both the software (this file) and the associated journal article."
+title: "Bani Suef irrigation-suitability digital-soil-mapping repository"
+abstract: >-
+  Reproducible analysis pipeline coupling quantile-random-forest digital soil
+  mapping, Monte Carlo Sys–Verheye ALES-Arid land evaluation, and counterfactual
+  gap decomposition over the Beni Suef alluvial floodplain (Middle Egypt).
+  Independent ground-truth validation against a 993-point Sentinel-2 cropland
+  survey (March 2025) is included.
+type: software
+version: "1.0.0"
+date-released: "2026-05-11"
+license: MIT
+repository-code: "https://github.com/REPLACE_WITH_USER/bani-suef-soil-suitability"
+url: "https://doi.org/10.5281/zenodo.PLACEHOLDER"
+keywords:
+  - digital soil mapping
+  - uncertainty quantification
+  - quantile random forest
+  - ALES-Arid
+  - Sys-Verheye
+  - counterfactual analysis
+  - irrigation suitability
+  - land evaluation
+  - Nile floodplain
+  - Egypt
+authors:
+  - family-names: "ElNaggar"
+    given-names: "Ahmed"
+    email: "a.elnaggar@un-ihe.org"
+    affiliation: "IHE Delft Institute for Water Education, Delft, The Netherlands"
+    # orcid: "https://orcid.org/0000-0000-0000-0000"   # <-- TODO add ORCID
+  # TODO: add remaining co-authors here in the same format, in author order.
+  # - family-names: "Samir"
+  #   given-names: "Mohamed"
+  #   affiliation: "Soil, Water and Environment Research Institute (SWERI), Egypt"
+  #   orcid: "https://orcid.org/0000-0000-0000-0000"
+preferred-citation:
+  type: article
+  title: >-
+    Drainage, not salinity, is the binding irrigation-suitability constraint in a
+    Middle-Egypt Nile floodplain: a probabilistic, counterfactual assessment
+  authors:
+    - family-names: "ElNaggar"
+      given-names: "Ahmed"
+      email: "a.elnaggar@un-ihe.org"
+      affiliation: "IHE Delft Institute for Water Education, Delft, The Netherlands"
+  journal: "Geoderma Regional"
+  year: 2026
+  status: submitted

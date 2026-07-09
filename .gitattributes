@@ -1,0 +1,17 @@
+# Treat sensitive file types as binary; ensure consistent line endings for code
+*.py        text eol=lf
+*.ipynb     text eol=lf
+*.md        text eol=lf
+*.yml       text eol=lf
+*.yaml      text eol=lf
+*.cff       text eol=lf
+*.json      text eol=lf
+*.txt       text eol=lf
+
+*.geojson   text eol=lf
+*.tif       binary
+*.tiff      binary
+*.png       binary
+*.jpg       binary
+*.pdf       binary
+*.zip       binary
