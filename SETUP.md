@@ -55,29 +55,82 @@ reproduce every result in the manuscript from Bundle A + Bundle B.
 
 ## Step 1 — Install the two programs you need
 
-You need **Git** (to download the code) and **Miniforge** (to run Python).
+You need **Git** (to download the code) and **conda** (to run Python).
 
-### Windows
+> ### ⚠️ Read this before installing anything
+>
+> **Commands in this guide are labelled Windows or macOS/Linux. Run only the
+> ones for your machine.** Copying a macOS command into a Windows window
+> produces confusing errors like
+> `curl: (3) URL using bad/illegal format or missing URL` — that is Windows not
+> understanding Mac syntax, not a broken download link.
+>
+> **You may already have both programs.** Check first, and skip whatever you
+> already have.
 
-1. Git — go to <https://git-scm.com/download/win>. The download starts on its
-   own. Run the installer and click **Next** on every screen. The defaults are
-   correct.
-2. Miniforge — go to <https://conda-forge.org/download/> and download the
-   Windows x86_64 installer. Run it. When it asks, choose **"Just Me"**. Leave
-   everything else at the default.
+### Step 1a — Check what you already have
 
-After both finish, open the **Start menu**, type `Miniforge Prompt`, and open it.
-A black window appears with a line ending in `(base) C:\Users\yourname>`.
-**Every command in this guide is typed into that window.** Not into PowerShell,
-not into Command Prompt — into the Miniforge Prompt.
+Open a terminal:
 
-### macOS / Linux
+- **Windows** — Start menu → type `Miniforge Prompt` and open it. If there is no
+  Miniforge Prompt, try `Anaconda Prompt`. If neither exists, open
+  `Command Prompt`.
+- **macOS** — open `Terminal` from Applications → Utilities.
+- **Linux** — open your usual terminal.
+
+Type these two lines, pressing Enter after each:
+
+```
+git --version
+conda --version
+```
+
+Now read the results:
+
+| What you see | What it means |
+|---|---|
+| Both print a version number | **You are done with Step 1. Go to Step 2.** |
+| `conda` prints a version | conda is installed — skip the Miniforge install below |
+| `git` prints a version | Git is installed — skip the Git install below |
+| `'...' is not recognized` / `command not found` | That one is missing — install it below |
+
+There is one more shortcut. If the start of your prompt line already reads
+`(base)`, like this:
+
+```
+(base) C:\Users\yourname>
+```
+
+then conda is installed **and** already switched on. That is all Step 1 was ever
+trying to achieve.
+
+### Step 1b — Install only what was missing
+
+<details open>
+<summary><b>Windows</b></summary>
+
+**Git** — go to <https://git-scm.com/download/win>. The download starts on its
+own. Run the installer and click **Next** on every screen; the defaults are
+correct.
+
+**conda** — go to <https://conda-forge.org/download/> and download the
+**Windows x86_64** installer (a `.exe` file). Run it. When it asks, choose
+**"Just Me"**. Leave everything else at the default.
+
+Afterwards, open the **Start menu**, type `Miniforge Prompt`, and open that. Your
+prompt should end with `(base) C:\Users\yourname>`.
+
+Anaconda works just as well as Miniforge — if you already have it, use its
+`Anaconda Prompt` and do not install Miniforge on top.
+
+</details>
+
+<details>
+<summary><b>macOS / Linux</b> — do not run these on Windows</summary>
+
+Git usually comes pre-installed. To install conda:
 
 ```bash
-# Git is usually already installed. Check with:
-git --version
-
-# Install Miniforge:
 curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
 bash Miniforge3-$(uname)-$(uname -m).sh
 ```
@@ -85,12 +138,23 @@ bash Miniforge3-$(uname)-$(uname -m).sh
 Close and reopen your terminal afterwards. You should see `(base)` at the start
 of the prompt line.
 
+</details>
+
+Whichever terminal shows `(base)` is the window you will use for the whole rest
+of this guide. On Windows that is normally the Miniforge Prompt or Anaconda
+Prompt — not PowerShell.
+
 ---
 
 ## Step 2 — Download the code
 
-In the Miniforge Prompt, type these lines one at a time, pressing Enter after
-each:
+> **Already have the folder?** If you were sent the project folder directly, or
+> you already cloned it, skip the `git clone` line. Just `cd` into the folder you
+> have and go to Step 3.
+
+Type these lines one at a time, pressing Enter after each.
+
+**Windows:**
 
 ```
 cd %USERPROFILE%\Documents
@@ -98,7 +162,16 @@ git clone https://github.com/El-Naggar8876/bani-suef-soil-suitability.git
 cd bani-suef-soil-suitability
 ```
 
-On macOS/Linux the first line is `cd ~/Documents` instead.
+**macOS / Linux:**
+
+```
+cd ~/Documents
+git clone https://github.com/El-Naggar8876/bani-suef-soil-suitability.git
+cd bani-suef-soil-suitability
+```
+
+The only difference is the first line. Everything after Step 2 is identical on
+all three systems.
 
 You now have a folder called `bani-suef-soil-suitability` inside Documents. This
 folder is called **the project folder** for the rest of this guide. Everything
