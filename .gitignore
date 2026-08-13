@@ -12,6 +12,7 @@
 !.gitignore
 !.gitattributes
 !README.md
+!SETUP.md
 !LICENSE
 !CITATION.cff
 !.zenodo.json

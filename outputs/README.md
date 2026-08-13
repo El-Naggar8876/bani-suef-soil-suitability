@@ -26,7 +26,11 @@ From a clean checkout with the environment installed (see top-level [`README.md`
 ```powershell
 cd notebooks
 python stage1_data_audit.py
-python stage2_covariate_stack.py        # OR stage2b_download_stack.py
+# Stages 2 and 2b require a GEE service-account key and are complementary,
+# not alternatives — run both, or skip both by obtaining outputs/stage2/*.csv
+# and outputs/stage2b_local_stack/covariate_stack_30m.tif directly.
+#   python stage2_covariate_stack.py
+#   python stage2b_download_stack.py
 python stage3a_qrf_cv.py
 python stage3b_predict_maps.py
 python stage4_iwqi_surface.py

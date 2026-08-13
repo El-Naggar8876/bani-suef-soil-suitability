@@ -2,11 +2,19 @@
 
 The seven analysis stages described in §2.11 of the manuscript are implemented as standalone Python scripts (with companion notebooks where applicable) that are designed to be run in order. Each stage reads its inputs from `outputs/<previous-stage>/` (or `data/`) and writes its outputs to `outputs/<this-stage>/`.
 
+Before running anything, verify your installation and input data with
+[`check_setup.py`](check_setup.py):
+
+```
+python notebooks/check_setup.py
+```
+
 | Order | Script | Purpose |
 |-------|--------|---------|
+| 0 | [`check_setup.py`](check_setup.py) | Pre-flight check — reports missing packages and missing input files |
 | 1 | [`stage1_data_audit.py`](stage1_data_audit.py) | Quality-control of soil and water datasets |
 | 2 | [`stage2_covariate_stack.py`](stage2_covariate_stack.py) | Assemble 53-band 30 m covariate stack from Earth Engine |
-| 2b | [`stage2b_download_stack.py`](stage2b_download_stack.py) | Optional helper to mirror the EE stack locally |
+| 2b | [`stage2b_download_stack.py`](stage2b_download_stack.py) | Downloads the wall-to-wall stack locally — **required alongside stage 2**, not an alternative to it (stage 2 writes the covariates sampled at points; stage 2b writes the raster used by stages 3b–8) |
 | 3a | [`stage3a_qrf_cv.py`](stage3a_qrf_cv.py) | Spatial 5-fold cross-validation benchmarking (QRF / RK / IDW / OK) |
 | 3b | [`stage3b_predict_maps.py`](stage3b_predict_maps.py) | QRF prediction at q05/q50/q95 for 8 soil properties |
 | 4 | [`stage4_iwqi_surface.py`](stage4_iwqi_surface.py) | Ordinary kriging of the Irrigation Water Quality Index |

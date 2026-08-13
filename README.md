@@ -1,12 +1,22 @@
 # Bani Suef irrigation-suitability — probabilistic counterfactual digital soil mapping
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1234567.svg)](https://doi.org/10.5281/zenodo.21279524)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21279524.svg)](https://doi.org/10.5281/zenodo.21279524)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.12](https://img.shields.io/badge/python-3.12-blue.svg)](https://www.python.org/downloads/release/python-3120/)
 
 Reproducible analysis pipeline accompanying the manuscript:
 
 > **El-Naggar, A. *et al.* (2026)** — *Drainage, not salinity, is the binding irrigation-suitability constraint in a Middle-Egypt Nile floodplain: a probabilistic, counterfactual assessment.* Submitted to *Geoderma Regional*.
+
+> ### 👉 New here? Read [`SETUP.md`](SETUP.md) first.
+>
+> **This repository contains the analysis code, not the data.** Cloning it and
+> running the scripts will fail immediately, by design: the field measurements
+> are embargoed until manuscript acceptance, and the 30 m covariate stack is far
+> too large for GitHub. [`SETUP.md`](SETUP.md) is a step-by-step, no-experience-
+> assumed guide covering what to install, what data to request, and where to put
+> it. Run `python notebooks/check_setup.py` at any point to see exactly what is
+> still missing.
 
 The repository combines (i) **digital soil mapping** with quantile random forest (QRF) and rigorous spatial cross-validation, (ii) **probabilistic land evaluation** via Monte Carlo propagation through the Sys–Verheye ALES-Arid rating equations, (iii) **counterfactual gap decomposition** that isolates the binding limitation pixel-by-pixel, and (iv) **independent ground-truth validation** against a 993-point Sentinel-2 cropland survey (March 2025) over the 641.98 km² Beni Suef floodplain, Middle Egypt.
 
@@ -16,7 +26,9 @@ The repository combines (i) **digital soil mapping** with quantile random forest
 
 ```
 .
+├── SETUP.md                # ← start here: full installation & run guide
 ├── notebooks/              # Sequential analysis scripts (stages 1–7 + auxiliary 8–9)
+│   ├── check_setup.py                         # pre-flight check: what am I missing?
 │   ├── stage1_data_audit.{py,ipynb}
 │   ├── stage2_covariate_stack.{py,ipynb}     # main covariate stack (53 bands, 30 m)
 │   ├── stage2b_download_stack.py              # local Earth Engine download helper
@@ -42,7 +54,27 @@ The repository combines (i) **digital soil mapping** with quantile random forest
 └── README.md               # this file
 ```
 
-> **Note** Raw soil-profile measurements, irrigation-water samples and the unprocessed Sentinel-1/2 / SRTM / ERA5-Land tiles are **not** redistributed in this repository. See [`data/README.md`](data/README.md) for download instructions and the Zenodo dataset DOI used for archival snapshots.
+### Inputs that are *not* in this repository
+
+The scripts additionally expect three folders at the repository root. They are
+listed in `.gitignore` and are **not** published here, because the field data is
+embargoed until manuscript acceptance:
+
+```
+Analysis/
+├── Analysis_Banisuef_New_FF__March_2025.xls   # 60 soil profiles (sheet "total")
+└── water_analyses Benisueif_FFF.xls           # 20 water samples (sheets "Total", "IWQ_FF")
+Layers/
+├── Study_Area_Last.shp                        # AOI polygon      (+ .shx .dbf .prj)
+├── Soil_Profiles.shp                          # profile points   (+ .shx .dbf .prj)
+└── Water_Samples.shp                          # sample points    (+ .shx .dbf .prj)
+Crop_March2025_11/
+└── Crop_March2025_11.shp                      # 993 survey points (+ .shx .dbf .prj)
+```
+
+All field datasets are in **EPSG:32636** (UTM 36N). Until the companion Zenodo
+dataset is minted at acceptance, request these from the corresponding author.
+See [`data/README.md`](data/README.md) and [`SETUP.md`](SETUP.md).
 
 ---
 
@@ -51,7 +83,7 @@ The repository combines (i) **digital soil mapping** with quantile random forest
 | # | Stage | Script | Inputs | Outputs |
 |---|-------|--------|--------|---------|
 | 1 | Data audit & QC | `stage1_data_audit.py` | Raw soil profiles, water samples | `outputs/stage1/` summary tables |
-| 2 | Covariate stack assembly | `stage2_covariate_stack.py` (+ `stage2b_download_stack.py`) | GEE: Sentinel-1 SAR, Sentinel-2 SR, ERA5-Land, SRTM | 53-band 30 m raster stack in `outputs/stage2/` |
+| 2 | Covariate stack assembly | `stage2_covariate_stack.py` **and** `stage2b_download_stack.py` | GEE: Sentinel-1 SAR, Sentinel-2 SR, ERA5-Land, SRTM | Covariates sampled at profiles/water samples in `outputs/stage2/`; 53-band 30 m raster stack in `outputs/stage2b_local_stack/` |
 | 3 | Spatial CV + QRF prediction | `stage3a_qrf_cv.py`, `stage3b_predict_maps.py` | Stage 1 + Stage 2 outputs | q05/q50/q95 soil-property rasters, PICP₉₀ = 0.85 |
 | 4 | IWQI kriging surface | `stage4_iwqi_surface.py` | 20 surface-water samples | IWQI surface on 30 m grid |
 | 5 | Probabilistic ALES-Arid | `stage5_ales_montecarlo.py` | Stage 3 quantile maps | 200 MC realisations of Sys–Verheye index, class probabilities |
@@ -64,40 +96,74 @@ Auxiliary stages 8 (publication figures) and 9 (graphical abstract) are *not* pa
 
 ## Quick start
 
-### Option A — pip + venv
+Full narrative instructions, including what to do if you have never used Python:
+[`SETUP.md`](SETUP.md). The condensed version follows.
+
+### Option A — conda (recommended; reliable on Windows)
 
 ```powershell
-git clone https://github.com/<USER>/bani-suef-soil-suitability.git
+git clone https://github.com/El-Naggar8876/bani-suef-soil-suitability.git
 cd bani-suef-soil-suitability
+conda env create -f environment.yml
+conda activate bani-suef-suitability
+```
+
+### Option B — pip + venv
+
+```powershell
 python -m venv .venv
 .venv\Scripts\Activate.ps1                      # PowerShell
 # (or)  source .venv/bin/activate                # bash/zsh
 pip install -r requirements.txt
 ```
 
-### Option B — conda
+`geopandas`, `rasterio` and `fiona` need compiled GDAL bindings and frequently
+fail to install this way on Windows. Prefer Option A.
+
+### Verify your setup
 
 ```powershell
-conda env create -f environment.yml
-conda activate bani-suef-suitability
+python notebooks/check_setup.py
 ```
 
-### Authenticating to Google Earth Engine (Stage 2 only)
+This reports every required package and input file as `OK` or `MISSING`, and
+exits non-zero if anything is absent. Run it before starting the pipeline.
 
-Stage 2 fetches Sentinel-1/2, SRTM and ERA5-Land collections from Google Earth Engine. You must have an approved GEE account.
+### Google Earth Engine credentials (Stages 2 and 2b only)
 
-```powershell
-earthengine authenticate
+Stages 2 and 2b fetch Sentinel-1/2, SRTM, CHIRPS, TerraClimate and ERA5-Land
+from Google Earth Engine. They authenticate with a **Google Cloud service
+account**, not with the interactive `earthengine authenticate` browser flow. The
+key must be saved as:
+
+```
+.secrets/gee_service_account.json
 ```
 
-If you already have a downloaded covariate stack, you can skip Stage 2 entirely and place the local stack in `outputs/stage2b_local_stack/`.
+`.secrets/` is git-ignored. **Never commit or share this file.**
+
+**Most users should skip Stages 2 and 2b entirely** by obtaining the three
+pre-computed artefacts from the corresponding author and placing them at:
+
+```
+outputs/stage2/covariates_at_profiles.csv
+outputs/stage2/covariates_at_water_samples.csv
+outputs/stage2b_local_stack/covariate_stack_30m.tif
+```
+
+Stages 3–9 then run with no Google account of any kind.
 
 ### Running the full pipeline
 
 ```powershell
 cd notebooks
 python stage1_data_audit.py
-python stage2_covariate_stack.py            # OR stage2b_download_stack.py for local
+# Stages 2 and 2b — only if rebuilding the covariate stack yourself (see above).
+# They are complementary, not alternatives: stage2 writes the covariate values
+# sampled at the 60 profiles (needed by 3a and 3b); stage2b writes the
+# wall-to-wall raster stack (needed by 3b, 4, 5, 6, 7 and 8). Run both.
+#   python stage2_covariate_stack.py
+#   python stage2b_download_stack.py
 python stage3a_qrf_cv.py
 python stage3b_predict_maps.py
 python stage4_iwqi_surface.py
@@ -110,6 +176,9 @@ python stage9_graphical_abstract.py         # optional: regenerate graphical abs
 ```
 
 Total runtime on a workstation with 16 GB RAM and 8 cores: approximately 2–4 hours, dominated by Stage 5 (Monte Carlo) and Stage 6 (counterfactuals). Stage 2 download time depends on Earth Engine queue.
+
+Each stage reads its inputs from disk and writes its outputs to disk, so the run
+can be interrupted after any stage and resumed later.
 
 ---
 
@@ -148,8 +217,8 @@ If you use this code, please cite **both** the software and the article:
   year         = 2026,
   publisher    = {Zenodo},
   version      = {v1.0.0},
-  doi          = {10.5281/zenodo.PLACEHOLDER},
-  url          = {https://doi.org/10.5281/zenodo.PLACEHOLDER}
+  doi          = {10.5281/zenodo.21279524},
+  url          = {https://doi.org/10.5281/zenodo.21279524}
 }
 
 @article{elnaggar_2026_banisuef_article,
