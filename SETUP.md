@@ -371,6 +371,10 @@ input data differs — say so before assuming the code is wrong.
 | `DriverError` or `.shx` errors | A shapefile arrived incomplete | Ask for the folder again as a zip, not as individual files |
 | `MemoryError`, or the computer freezes | Stages 5–6 need real RAM | Close other applications; 16 GB is the practical minimum |
 | `'python' is not recognized` | Wrong window | Use the Miniforge Prompt, not PowerShell |
+| `can't open file 'config.py'` | You are in `notebooks/`, but `config.py` is one level up | `cd ..` then retry |
+| `can't open file 'stage1_data_audit.py'` | The opposite — you are in the project root | `cd notebooks` then retry |
+| `ModuleNotFoundError: No module named 'ee'` but conda says it's installed | Your IDE is using a different Python | Run from the Miniforge Prompt, or point the IDE at the `bani-suef-suitability` interpreter |
+| `earthengine: command not found` | Environment not active, or you are in an IDE console | `conda activate bani-suef-suitability` in a real terminal |
 
 If you are stuck, open an issue at
 <https://github.com/El-Naggar8876/bani-suef-soil-suitability/issues> and paste
@@ -388,6 +392,35 @@ Stages 2 and 2b download Sentinel-1, Sentinel-2, SRTM, CHIRPS, TerraClimate and
 ERA5-Land through Google Earth Engine, then assemble them into the 53-band 30 m
 stack. Everything specific to *you* lives in one file, `config.py`, in the
 project folder. **That is the only file you edit.**
+
+> ### Where do I type these commands?
+>
+> **In the terminal — the same window you used for Steps 1 to 6.** On Windows
+> that is the **Miniforge Prompt** (or Anaconda Prompt); on macOS/Linux, your
+> ordinary terminal. Not an IDE, not a Jupyter notebook.
+>
+> Two reasons. First, `earthengine authenticate` is a command-line program, not
+> Python code — it cannot be run from inside a script or a Spyder console.
+> Second, IDEs choose their own Python interpreter, and it is usually *not* this
+> project's environment; the symptom is `ModuleNotFoundError: No module named
+> 'ee'` while conda insists the package is installed.
+>
+> Before anything else in this appendix, confirm two things:
+>
+> ```
+> conda activate bani-suef-suitability
+> cd path\to\bani-suef-soil-suitability
+> ```
+>
+> Your prompt should begin with `(bani-suef-suitability)`. **Watch which folder
+> you are in:** `config.py` lives in the project root, the stage scripts live in
+> `notebooks/`. Running `python config.py` from inside `notebooks/` fails with
+> "can't open file" — you are simply one folder too deep.
+>
+> If you strongly prefer an IDE, it will work, but you must point it at the
+> `bani-suef-suitability` interpreter yourself (in VS Code: Ctrl+Shift+P →
+> "Python: Select Interpreter"). Run `earthengine authenticate` in a terminal
+> regardless.
 
 ### A1 — Get an Earth Engine account
 
@@ -421,15 +454,19 @@ March 2025 date lock, the 30 m grid, EPSG:32636, and the random seed.
 
 ### A3 — Log in
 
-Run this once. It opens a browser window; approve the access request.
+In the Miniforge Prompt, run this once. It opens a browser window; approve the
+access request, and copy back the code if it asks for one.
 
 ```
 earthengine authenticate
 ```
 
-Earth Engine remembers you on this machine afterwards.
+Earth Engine remembers you on this machine afterwards, so you never repeat this.
 
 ### A4 — Test before committing to a long download
+
+**From the project root** — the folder containing `config.py`, `README.md` and
+`environment.yml`:
 
 ```
 python config.py
@@ -439,13 +476,20 @@ This does a one-second round-trip to Earth Engine and prints either `OK` or a
 specific explanation of what is wrong. Run it now rather than discovering a
 credential problem forty minutes into a download.
 
+If you get `can't open file 'config.py'`, you are inside `notebooks/`. Type
+`cd ..` and try again.
+
 ### A5 — Run both stages
+
+Now move down into the scripts folder:
 
 ```
 cd notebooks
 python stage2_covariate_stack.py     # writes outputs/stage2/*.csv
 python stage2b_download_stack.py     # writes outputs/stage2b_local_stack/*.tif
 ```
+
+Leave the window open while these run. Closing it stops the download.
 
 **Both are required — they are not alternatives.** `stage2` produces the
 covariate values sampled at the 60 profile locations, which Stages 3a and 3b
