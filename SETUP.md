@@ -35,7 +35,7 @@ Crop_March2025_11/
 > A "shapefile" is not one file — it is a set of 4 to 6 files that share a name
 > and differ only in extension. They must all travel together or nothing works.
 
-**Bundle B — the pre-computed satellite stack** (large, ~1–3 GB)
+**Bundle B — the satellite covariates.** Here you have a choice of two routes.
 
 ```
 outputs/stage2/covariates_at_profiles.csv
@@ -43,13 +43,34 @@ outputs/stage2/covariates_at_water_samples.csv
 outputs/stage2b_local_stack/covariate_stack_30m.tif
 ```
 
-Bundle B is what Stage 2 would have produced. Stage 2 talks to Google Earth
-Engine, needs a Google Cloud service-account key that cannot be shared, and takes
-hours. **Accepting Bundle B lets you skip Stage 2 entirely.** Unless you
-specifically want to rebuild the satellite covariates yourself, take Bundle B.
+These three files are what Stages 2 and 2b produce. You can either **receive**
+them or **rebuild** them:
 
-You do **not** need a Google account, an Earth Engine account, or any API key to
-reproduce every result in the manuscript from Bundle A + Bundle B.
+| | Route 1 — receive the archived stack | Route 2 — rebuild it yourself |
+|---|---|---|
+| **You get** | Byte-for-byte the inputs behind the published figures | Your own freshly downloaded satellite composites |
+| **Answers** | "Do I reproduce the published numbers *exactly*?" | "Does this method work *independently*?" |
+| **You need** | A 1–3 GB download link | An Earth Engine account and a Google Cloud project |
+| **Setup time** | Minutes | 1–2 days waiting for Google's approval |
+| **Run time** | None | Several hours |
+| **Do this if** | You are a coauthor, reviewer, or checking the results | You are extending the work, or the archive is unavailable |
+
+**If you are a coauthor or reviewer, take Route 1.** It is faster and it is the
+only route that verifies the published numbers. Ask the corresponding author for
+the three files above.
+
+For Route 2, see **Appendix A**. You will edit one file, `config.py`, to add your
+own Google Cloud project ID.
+
+> **An honest caveat about Route 2.** Google periodically reprocesses the
+> Sentinel archives. A stack rebuilt in 2027 will be very close to, but not
+> identical with, the one used for the manuscript, so your final numbers will
+> land near the published ones rather than exactly on them. That is a property
+> of satellite archives, not a bug in this code, and no amount of seed-fixing
+> can remove it. Route 1 exists precisely because of this.
+
+With Route 1, you need **no** Google account, Earth Engine account, or API key
+to reproduce every result in the manuscript.
 
 ---
 
@@ -285,8 +306,9 @@ python stage8_figures.py
 python stage9_graphical_abstract.py
 ```
 
-Notice that **Stage 2 is not in the list** — Bundle B replaced it. If you did
-decide to rebuild the satellite stack yourself, see the appendix at the bottom.
+Notice that **Stage 2 is not in the list.** On Route 1 the archived stack
+replaced it. On Route 2 you already ran Stages 2 and 2b during Appendix A, so by
+this point they are done either way.
 
 Expect **2 to 4 hours** in total on a machine with 16 GB of RAM. Stages 5 and 6
 account for most of it because they each run hundreds of Monte Carlo
@@ -357,46 +379,95 @@ that matters, and it is the line people most often leave out.
 
 ---
 
-## Appendix A — Rebuilding the satellite stack yourself (Stage 2)
+## Appendix A — Route 2: rebuilding the satellite stack yourself
 
-Skip this unless you have a reason to distrust Bundle B.
+This is Route 2 from Step 0. Take it if you are extending the work, or if the
+archived stack is unavailable. Skip it if you were given Bundle B.
 
 Stages 2 and 2b download Sentinel-1, Sentinel-2, SRTM, CHIRPS, TerraClimate and
-ERA5-Land through Google Earth Engine. They authenticate with a **Google Cloud
-service-account key**, not with the ordinary `earthengine authenticate` browser
-login. You must create your own key:
+ERA5-Land through Google Earth Engine, then assemble them into the 53-band 30 m
+stack. Everything specific to *you* lives in one file, `config.py`, in the
+project folder. **That is the only file you edit.**
 
-1. Register for Earth Engine at <https://earthengine.google.com/signup/> and
-   wait for approval (typically 1–2 days).
-2. In the Google Cloud console, create a project, enable the Earth Engine API,
-   create a **service account**, and download its **JSON key**.
-3. Register that service account at
-   <https://signup.earthengine.google.com/#!/service_accounts>.
-4. Save the JSON file in the project folder as:
+### A1 — Get an Earth Engine account
 
-   ```
-   .secrets/gee_service_account.json
-   ```
+1. Register at <https://earthengine.google.com/signup/>. Approval typically
+   takes 1–2 days, so start here.
+2. In the Google Cloud console <https://console.cloud.google.com/>, create a
+   project (or use an existing one) and enable the **Earth Engine API** on it.
+3. Note the project **ID**. It is shown in the project selector at the top of
+   the console and looks like `ee-yourname` or `my-project-464812`. The ID is
+   often *not* the same as the display name — copy the ID.
 
-   The `.secrets/` folder is git-ignored. **Never commit this file, and never
-   send it to anyone** — it grants access to your Google Cloud billing account.
+### A2 — Tell this repository who you are
 
-Then run, before Stage 3a:
+Open `config.py` in the project folder with any text editor — Notepad is fine.
+Near the top you will see:
+
+```python
+GEE_PROJECT: str | None = None      # e.g. "ee-yourname" or "my-project-464812"
+```
+
+Change it to your project ID, keeping the quotation marks:
+
+```python
+GEE_PROJECT: str | None = "ee-yourname"
+```
+
+Save the file. That is the only change most people need to make. The rest of
+`config.py` is documentation, plus a section marked **FROZEN** listing the
+values that must stay as they are for the run to count as a reproduction — the
+March 2025 date lock, the 30 m grid, EPSG:32636, and the random seed.
+
+### A3 — Log in
+
+Run this once. It opens a browser window; approve the access request.
 
 ```
+earthengine authenticate
+```
+
+Earth Engine remembers you on this machine afterwards.
+
+### A4 — Test before committing to a long download
+
+```
+python config.py
+```
+
+This does a one-second round-trip to Earth Engine and prints either `OK` or a
+specific explanation of what is wrong. Run it now rather than discovering a
+credential problem forty minutes into a download.
+
+### A5 — Run both stages
+
+```
+cd notebooks
 python stage2_covariate_stack.py     # writes outputs/stage2/*.csv
 python stage2b_download_stack.py     # writes outputs/stage2b_local_stack/*.tif
 ```
 
-Both are required. They are not alternatives to each other:
-`stage2` produces the covariate values sampled at the 60 profile locations
-(needed by Stages 3a and 3b), while `stage2b` produces the wall-to-wall raster
-stack (needed by Stages 3b, 4, 5, 6, 7 and 8). Stage 2 also starts an
-asynchronous export to Google Drive, which is a leftover from development and is
-not used by any later stage — you can ignore it.
+**Both are required — they are not alternatives.** `stage2` produces the
+covariate values sampled at the 60 profile locations, which Stages 3a and 3b
+need. `stage2b` produces the wall-to-wall raster, which Stages 3b, 4, 5, 6, 7
+and 8 need. Running only one leaves later stages unable to start.
+
+Stage 2 also kicks off an asynchronous export to Google Drive. That is a
+leftover from development, no later stage reads it, and you can ignore it.
 
 Combined runtime depends on the Earth Engine queue and is typically several
-hours.
+hours. Afterwards, continue from Stage 3a in Step 6.
+
+### Using a service-account key instead
+
+The original authors ran these stages unattended with a Google Cloud
+service-account key rather than a browser login. If you have such a key, place
+it at `.secrets/gee_service_account.json` and `config.py` will find and prefer
+it automatically — no project ID needed, since the key carries its own.
+
+**A service-account key is a credential, not data.** It is git-ignored for a
+reason. Never commit it, never email it, and never include it in a Zenodo
+archive. Anyone holding that file can spend money on your Google Cloud account.
 
 ---
 

@@ -23,6 +23,7 @@ Outputs in outputs/stage2/.
 from pathlib import Path
 import os
 import json
+import sys
 import time
 import ee
 import geopandas as gpd
@@ -34,15 +35,15 @@ OUT = ROOT / "outputs" / "stage2"
 STAGE1 = ROOT / "outputs" / "stage1"
 OUT.mkdir(parents=True, exist_ok=True)
 
-SA_KEY = ROOT / ".secrets" / "gee_service_account.json"
-SA_EMAIL = json.loads(SA_KEY.read_text())["client_email"]
-PROJECT = json.loads(SA_KEY.read_text())["project_id"]
+# Earth Engine credentials are configured in config.py at the repository root.
+# Edit that file, not this one. It accepts either a browser login
+# (`earthengine authenticate` plus your own project ID) or a service-account
+# key, and prints an actionable message if neither is set up. See SETUP.md,
+# Appendix A.
+sys.path.insert(0, str(ROOT))
+from config import init_ee
 
-ee.Initialize(
-    credentials=ee.ServiceAccountCredentials(SA_EMAIL, str(SA_KEY)),
-    project=PROJECT,
-)
-print("GEE initialised, project:", PROJECT)
+init_ee()
 
 # ---------------------------------------------------------------------------
 # 1. AOI

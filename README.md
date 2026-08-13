@@ -132,18 +132,10 @@ exits non-zero if anything is absent. Run it before starting the pipeline.
 ### Google Earth Engine credentials (Stages 2 and 2b only)
 
 Stages 2 and 2b fetch Sentinel-1/2, SRTM, CHIRPS, TerraClimate and ERA5-Land
-from Google Earth Engine. They authenticate with a **Google Cloud service
-account**, not with the interactive `earthengine authenticate` browser flow. The
-key must be saved as:
+from Google Earth Engine. There are two routes, and both are supported.
 
-```
-.secrets/gee_service_account.json
-```
-
-`.secrets/` is git-ignored. **Never commit or share this file.**
-
-**Most users should skip Stages 2 and 2b entirely** by obtaining the three
-pre-computed artefacts from the corresponding author and placing them at:
+**Route 1 — use the archived stack (recommended for verification).** Obtain the
+three pre-computed artefacts from the corresponding author and place them at:
 
 ```
 outputs/stage2/covariates_at_profiles.csv
@@ -151,7 +143,34 @@ outputs/stage2/covariates_at_water_samples.csv
 outputs/stage2b_local_stack/covariate_stack_30m.tif
 ```
 
-Stages 3–9 then run with no Google account of any kind.
+Stages 3–9 then run with no Google account of any kind, and reproduce the
+published numbers exactly.
+
+**Route 2 — rebuild it with your own Earth Engine account.** Edit [`config.py`](config.py)
+at the repository root and set your Google Cloud project ID:
+
+```python
+GEE_PROJECT: str | None = "ee-yourname"
+```
+
+Then authenticate and verify before committing to a multi-hour download:
+
+```powershell
+earthengine authenticate
+python config.py                 # one-second credential round-trip
+cd notebooks
+python stage2_covariate_stack.py
+python stage2b_download_stack.py
+```
+
+A service-account key at `.secrets/gee_service_account.json` is detected
+automatically and takes precedence; `.secrets/` is git-ignored and **must never
+be committed or shared**.
+
+> Note that Route 2 does not reproduce the published figures bit-for-bit. Google
+> periodically reprocesses the Sentinel archives, so a stack rebuilt later will
+> be close to, but not identical with, the one behind the manuscript. Use Route 1
+> to verify published values; use Route 2 to test the method independently.
 
 ### Running the full pipeline
 

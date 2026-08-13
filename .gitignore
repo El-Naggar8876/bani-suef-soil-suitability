@@ -18,6 +18,7 @@
 !.zenodo.json
 !requirements.txt
 !environment.yml
+!config.py
 !CHANGELOG.md
 !CONTRIBUTING.md
 

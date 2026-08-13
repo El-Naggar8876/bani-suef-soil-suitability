@@ -157,18 +157,33 @@ have_b = all([
     check_file("outputs/stage2b_local_stack/covariate_stack_30m.tif", B),
 ])
 if not have_b:
+    print()
+    print("  Bundle B is absent. The alternative is to rebuild the stack with")
+    print("  Earth Engine (stages 2 and 2b). Checking whether that is set up:")
     key = ROOT / ".secrets" / "gee_service_account.json"
-    if key.is_file():
-        print()
-        line(OK, ".secrets/gee_service_account.json",
-             "you can build stage 2 yourself instead of using Bundle B")
+    line(OK if key.is_file() else WARN, ".secrets/gee_service_account.json",
+         "service-account key present" if key.is_file() else "no service-account key")
+
+    cfg = ROOT / "config.py"
+    if not cfg.is_file():
+        line(BAD, "config.py", "missing from the repository")
     else:
-        print()
-        line(WARN, ".secrets/gee_service_account.json",
-             "absent - so Bundle B is your only route; see Appendix A of SETUP.md")
+        text = cfg.read_text(encoding="utf-8", errors="replace")
+        configured = any(
+            ln.strip().startswith("GEE_PROJECT") and "None" not in ln.split("#")[0]
+            for ln in text.splitlines()
+        )
+        line(OK if configured else WARN, "config.py",
+             "GEE_PROJECT is set" if configured else "GEE_PROJECT not set yet")
+        if not configured and not key.is_file():
+            print()
+            print("  To rebuild it yourself: set GEE_PROJECT in config.py, run")
+            print("  'earthengine authenticate', then test with 'python config.py'.")
+            print("  See SETUP.md Appendix A. Otherwise, request Bundle B.")
 
 # 5. Repository files -------------------------------------------------------
 header("5. Repository files (should already be present from GitHub)")
+check_file("config.py")
 check_file("data/countries.geojson")
 check_file("data/ne_10m_rivers.geojson")
 for s in ["stage1_data_audit", "stage3a_qrf_cv", "stage3b_predict_maps",

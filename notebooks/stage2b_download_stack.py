@@ -9,7 +9,7 @@ Requires: gdal command line (or rasterio.merge if gdal not in PATH).
 """
 from __future__ import annotations
 from pathlib import Path
-import json, io, zipfile, math, time, urllib.request
+import json, io, sys, zipfile, math, time, urllib.request
 import ee
 import geopandas as gpd
 import rasterio
@@ -22,13 +22,12 @@ TILES = OUT / "tiles"
 OUT.mkdir(parents=True, exist_ok=True)
 TILES.mkdir(parents=True, exist_ok=True)
 
-SA_KEY = ROOT / ".secrets" / "gee_service_account.json"
-info = json.loads(SA_KEY.read_text())
-ee.Initialize(
-    credentials=ee.ServiceAccountCredentials(info["client_email"], str(SA_KEY)),
-    project=info["project_id"],
-)
-print("GEE initialised:", info["project_id"])
+# Earth Engine credentials are configured in config.py at the repository root.
+# Edit that file, not this one. See SETUP.md, Appendix A.
+sys.path.insert(0, str(ROOT))
+from config import init_ee
+
+init_ee()
 
 # ---------------------------------------------------------------------------
 # Re-build the same stack as Stage 2 but cast everything to Float32
