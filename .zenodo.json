@@ -1,27 +1,46 @@
 {
   "title": "Bani Suef irrigation-suitability digital-soil-mapping repository",
-  "description": "<p>Reproducible analysis pipeline coupling quantile-random-forest digital soil mapping, Monte Carlo Sys\u2013Verheye ALES-Arid land evaluation, and counterfactual gap decomposition over the Beni Suef alluvial floodplain (Middle Egypt). Independent ground-truth validation against a 993-point Sentinel-2 cropland survey (March 2025) is included. Companion code to ElNaggar et al. (2026), <em>Geoderma Regional</em> (submitted).</p>",
+  "description": "<p>Reproducible analysis pipeline coupling quantile-random-forest digital soil mapping, Monte Carlo Sys&ndash;Verheye ALES-Arid land evaluation, and counterfactual gap decomposition over the Beni Suef alluvial floodplain (Middle Egypt). Independent ground-truth validation against a 993-point Sentinel-2 cropland survey (March 2025) is included.</p><p>Version 1.1.0 adds the stages prepared for the Geoderma Regional first revision: a structural sensitivity analysis of the rating index (four aggregation rules, elasticities, threshold perturbation), a Gaussian-copula variant of the Monte Carlo propagation, quantification and post-stratified correction of the crop-survey sampling bias, and an independent comparison against FAO WaPOR v3 transpiration, evapotranspiration and biomass fields.</p><p>Companion code to El-Naggar et al. (2026), <em>Geoderma Regional</em> (under revision).</p>",
   "upload_type": "software",
   "license": "MIT",
   "access_right": "open",
   "language": "eng",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "keywords": [
-    "digital soil mapping",
-    "uncertainty quantification",
-    "quantile random forest",
     "ALES-Arid",
+    "Egypt",
+    "Gaussian copula",
+    "Nile floodplain",
     "Sys-Verheye",
+    "WaPOR",
     "counterfactual analysis",
+    "digital soil mapping",
     "irrigation suitability",
     "land evaluation",
-    "Nile floodplain",
-    "Egypt"
+    "quantile random forest",
+    "sensitivity analysis",
+    "uncertainty quantification"
   ],
   "creators": [
     {
-      "name": "ElNaggar, Ahmed",
+      "name": "El-Naggar, Ahmed G.",
       "affiliation": "IHE Delft Institute for Water Education, Delft, The Netherlands"
+    },
+    {
+      "name": "Abou Alfotoh, M. S. M.",
+      "affiliation": "Soils, Water and Environmental Research Institute, ARC, Giza, Egypt"
+    },
+    {
+      "name": "Abdel Ghaffar, M. K.",
+      "affiliation": "Soils, Water and Environmental Research Institute, ARC, Giza, Egypt"
+    },
+    {
+      "name": "El-Gamal, B. A.",
+      "affiliation": "Soils, Water and Environmental Research Institute, ARC, Giza, Egypt"
+    },
+    {
+      "name": "Abdellatif, A. D.",
+      "affiliation": "Soils, Water and Environmental Research Institute, ARC, Giza, Egypt"
     }
   ],
   "related_identifiers": [
@@ -33,5 +52,5 @@
     }
   ],
   "communities": [],
-  "notes": "Replace placeholder DOI with the journal-issued DOI at acceptance. Add co-authors and ORCIDs before pushing the GitHub release that triggers Zenodo archiving."
+  "notes": "Add ORCIDs for all creators, and replace the placeholder article DOI with the journal-issued DOI at acceptance."
 }

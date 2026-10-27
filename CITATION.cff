@@ -7,13 +7,17 @@ abstract: >-
   mapping, Monte Carlo Sys–Verheye ALES-Arid land evaluation, and counterfactual
   gap decomposition over the Beni Suef alluvial floodplain (Middle Egypt).
   Independent ground-truth validation against a 993-point Sentinel-2 cropland
-  survey (March 2025) is included.
+  survey (March 2025) is included, together with the revision stages added for
+  Geoderma Regional R1: a structural sensitivity analysis of the rating index, a
+  Gaussian-copula variant of the uncertainty propagation, quantification of the
+  crop-survey sampling bias, and an independent comparison against FAO WaPOR v3
+  transpiration, evapotranspiration and biomass fields.
 type: software
-version: "1.0.0"
-date-released: "2026-05-11"
+version: "1.1.0"
+date-released: "2026-10-27"
 license: MIT
-repository-code: "https://github.com/REPLACE_WITH_USER/bani-suef-soil-suitability"
-url: "https://doi.org/10.5281/zenodo.PLACEHOLDER"
+repository-code: "https://github.com/El-Naggar8876/bani-suef-soil-suitability"
+url: "https://doi.org/10.5281/zenodo.21279524"
 keywords:
   - digital soil mapping
   - uncertainty quantification
@@ -23,29 +27,53 @@ keywords:
   - counterfactual analysis
   - irrigation suitability
   - land evaluation
+  - WaPOR
   - Nile floodplain
   - Egypt
 authors:
-  - family-names: "ElNaggar"
-    given-names: "Ahmed"
+  - family-names: "El-Naggar"
+    given-names: "Ahmed G."
     email: "a.elnaggar@un-ihe.org"
-    affiliation: "IHE Delft Institute for Water Education, Delft, The Netherlands"
+    affiliation: "Land and Water Management Department, IHE Delft Institute for Water Education, Delft, The Netherlands"
     # orcid: "https://orcid.org/0000-0000-0000-0000"   # <-- TODO add ORCID
-  # TODO: add remaining co-authors here in the same format, in author order.
-  # - family-names: "Samir"
-  #   given-names: "Mohamed"
-  #   affiliation: "Soil, Water and Environment Research Institute (SWERI), Egypt"
-  #   orcid: "https://orcid.org/0000-0000-0000-0000"
+  - family-names: "Abou Alfotoh"
+    given-names: "M. S. M."
+    affiliation: "Remote Sensing and GIS Unit, Soils, Water and Environmental Research Institute, ARC, Giza, Egypt"
+    # orcid: ""                                        # <-- TODO add ORCID
+  - family-names: "Abdel Ghaffar"
+    given-names: "M. K."
+    affiliation: "Remote Sensing and GIS Unit, Soils, Water and Environmental Research Institute, ARC, Giza, Egypt"
+    # orcid: ""                                        # <-- TODO add ORCID
+  - family-names: "El-Gamal"
+    given-names: "B. A."
+    affiliation: "Chemistry and Physical Department, Soils, Water and Environmental Research Institute, ARC, Giza, Egypt"
+    # orcid: ""                                        # <-- TODO add ORCID
+  - family-names: "Abdellatif"
+    given-names: "A. D."
+    affiliation: "Remote Sensing and GIS Unit, Soils, Water and Environmental Research Institute, ARC, Giza, Egypt"
+    # orcid: ""                                        # <-- TODO add ORCID
 preferred-citation:
   type: article
   title: >-
-    Drainage, not salinity, is the binding irrigation-suitability constraint in a
-    Middle-Egypt Nile floodplain: a probabilistic, counterfactual assessment
+    Modelled irrigation-suitability constraints in a Middle-Egypt Nile
+    floodplain: a probabilistic, counterfactual assessment
   authors:
-    - family-names: "ElNaggar"
-      given-names: "Ahmed"
+    - family-names: "El-Naggar"
+      given-names: "Ahmed G."
       email: "a.elnaggar@un-ihe.org"
-      affiliation: "IHE Delft Institute for Water Education, Delft, The Netherlands"
+      affiliation: "Land and Water Management Department, IHE Delft Institute for Water Education, Delft, The Netherlands"
+    - family-names: "Abou Alfotoh"
+      given-names: "M. S. M."
+      affiliation: "Soils, Water and Environmental Research Institute, ARC, Giza, Egypt"
+    - family-names: "Abdel Ghaffar"
+      given-names: "M. K."
+      affiliation: "Soils, Water and Environmental Research Institute, ARC, Giza, Egypt"
+    - family-names: "El-Gamal"
+      given-names: "B. A."
+      affiliation: "Soils, Water and Environmental Research Institute, ARC, Giza, Egypt"
+    - family-names: "Abdellatif"
+      given-names: "A. D."
+      affiliation: "Soils, Water and Environmental Research Institute, ARC, Giza, Egypt"
   journal: "Geoderma Regional"
   year: 2026
   status: submitted

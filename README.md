@@ -6,7 +6,7 @@
 
 Reproducible analysis pipeline accompanying the manuscript:
 
-> **El-Naggar, A. *et al.* (2026)** — *Drainage, not salinity, is the binding irrigation-suitability constraint in a Middle-Egypt Nile floodplain: a probabilistic, counterfactual assessment.* Submitted to *Geoderma Regional*.
+> **El-Naggar, A. *et al.* (2026)** — *Modelled irrigation-suitability constraints in a Middle-Egypt Nile floodplain: a probabilistic, counterfactual assessment.* *Geoderma Regional*, under revision (GEODRS-D-26-00837).
 
 > ### 👉 New here? Read [`SETUP.md`](SETUP.md) first.
 >
@@ -18,7 +18,7 @@ Reproducible analysis pipeline accompanying the manuscript:
 > it. Run `python notebooks/check_setup.py` at any point to see exactly what is
 > still missing.
 
-The repository combines (i) **digital soil mapping** with quantile random forest (QRF) and rigorous spatial cross-validation, (ii) **probabilistic land evaluation** via Monte Carlo propagation through the Sys–Verheye ALES-Arid rating equations, (iii) **counterfactual gap decomposition** that isolates the binding limitation pixel-by-pixel, and (iv) **independent ground-truth validation** against a 993-point Sentinel-2 cropland survey (March 2025) over the 641.98 km² Beni Suef floodplain, Middle Egypt.
+The repository combines (i) **digital soil mapping** with quantile random forest (QRF) and rigorous spatial cross-validation, (ii) **probabilistic land evaluation** via Monte Carlo propagation through the Sys–Verheye ALES-Arid rating equations, (iii) **counterfactual gap decomposition** that isolates the binding limitation pixel-by-pixel, and (iv) **independent ground-truth validation** against a 993-point Sentinel-2 cropland survey (March 2025) over the 644 km² Beni Suef floodplain, Middle Egypt.
 
 ---
 
@@ -242,7 +242,7 @@ If you use this code, please cite **both** the software and the article:
 
 @article{elnaggar_2026_banisuef_article,
   author  = {El-Naggar, Ahmed;  Abou Alfotoh, M.S.M; Abdel Ghaffar, M. K; El-GamalB. A; Abdellatif D. Abdellatif},
-  title   = {Drainage, not salinity, is the binding irrigation-suitability constraint in a Middle-Egypt Nile floodplain: a probabilistic, counterfactual assessment},
+  title   = {Modelled irrigation-suitability constraints in a Middle-Egypt Nile floodplain: a probabilistic, counterfactual assessment},
   journal = {Geoderma Regional},
   year    = 2026,
   note    = {Submitted}
