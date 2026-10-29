@@ -92,3 +92,10 @@ manuscript/_make_*.py
 *.pdf
 *.xls
 *.xlsx
+
+# Revision 1 stages (Geoderma Regional R1) ----------------------------------
+!revision_r1/
+revision_r1/*
+!revision_r1/*.py
+!revision_r1/README.md
+revision_r1/__pycache__/
