@@ -14,7 +14,7 @@ abstract: >-
   transpiration, evapotranspiration and biomass fields.
 type: software
 version: "1.1.0"
-date-released: "2026-10-27"
+date-released: "2026-10-29"
 license: MIT
 repository-code: "https://github.com/El-Naggar8876/bani-suef-soil-suitability"
 url: "https://doi.org/10.5281/zenodo.21279524"
