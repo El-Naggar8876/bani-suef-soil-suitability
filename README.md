@@ -1,6 +1,6 @@
 # Bani Suef irrigation-suitability — probabilistic counterfactual digital soil mapping
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21279524.svg)](https://doi.org/10.5281/zenodo.21279524)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23761038.svg)](https://doi.org/10.5281/zenodo.23761038)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.12](https://img.shields.io/badge/python-3.12-blue.svg)](https://www.python.org/downloads/release/python-3120/)
 
@@ -236,8 +236,8 @@ If you use this code, please cite **both** the software and the article:
   year         = 2026,
   publisher    = {Zenodo},
   version      = {v1.0.0},
-  doi          = {10.5281/zenodo.21279524},
-  url          = {https://doi.org/10.5281/zenodo.21279524}
+  doi          = {10.5281/zenodo.23761038},
+  url          = {https://doi.org/10.5281/zenodo.23761038}
 }
 
 @article{elnaggar_2026_banisuef_article,
